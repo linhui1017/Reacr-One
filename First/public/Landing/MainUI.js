@@ -41,6 +41,7 @@ class MainUI extends Component {
                     <MainHeader/>
                 </div>
                 
+
                 <div style={panelCSS}>
                     <MainPanel/>
                 </div>

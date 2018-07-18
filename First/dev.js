@@ -127,7 +127,7 @@ devPack = env => {
             ],
         },
         plugins: [
-            new webpack.HotModuleReplacementPlugin(), //-- react 的 hotreload plugin
+            //new webpack.HotModuleReplacementPlugin(), //-- react 的 hotreload plugin
             new webpack.NamedModulesPlugin(),
             new MiniCssExtractPlugin({
                 filename: "styles.css",
