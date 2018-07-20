@@ -1,20 +1,64 @@
 import React, { Component } from 'react'
 import { Menu, Icon, Button } from 'semantic-ui-react'
+import PropTypes from 'prop-types';
 import { FunctionType } from './SysConstants'
 
 
 class MainHeader extends Component {
 
+  static propTypes = {
+      activefn: PropTypes.object.isRequired,
+      onChange:PropTypes.func.isRequired
 
-  state = { activeA: FunctionType.IPB }
+  };
 
-  handleAClick = (e, obj) => {
-    obj.fn.Fn();
-    this.setState({ activeA: FunctionType[obj.select] })
+  static defaultProps = {
+      
+      activefn : FunctionType.Default,
   }
 
-  handleMenuClick = (e, data) => {
-    console.log(1, e, data);
+
+  handleAClick = (e, obj) => {
+   // console.log(123, FunctionType[obj.select]);
+    this.props.onChange(FunctionType[obj.select], this.props.activefn);
+    //this.setState({ activeA: FunctionType[obj.select] })
+
+    const payload = { StationNO: '06A'}
+  //作POST
+  fetch('http://go.kfcc.intra/Gateway/ws/Vender/MedicusTek/SCDataTransfer.asmx/scGetNurseList',
+   {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(payload)
+   })
+    .then((response) => {
+     
+      //ok 代表狀態碼在範圍 200-299
+      // if (!response.ok) throw new Error(response.statusText)
+       return response.json()
+    })
+    .then((item) => {
+      console.log(item.d.NurseList);
+    })
+    .catch((error) => {
+      //這裡可以顯示一些訊息
+      //console.error(error)
+    })
+  }
+
+
+  componentDidMount() {
+
+  }
+
+  handleTouchmove= (e) => {
+      e = e || window.event;
+      if (e.preventDefault) {
+        e.preventDefault();
+      }
+      return false;
   }
 
   render() {
@@ -35,7 +79,7 @@ class MainHeader extends Component {
       'width': 'auto',
       'height': 'auto',
       'marginLeft': 'auto',
- 
+
     }
 
     const userCSS = {
@@ -43,16 +87,15 @@ class MainHeader extends Component {
       'height': 'auto',
       'margin': '10px',
       'marginLeft': 'auto',
-      
+
     }
 
-    const { activeA } = this.state;
 
-    const aFn = new Object();
-    aFn.Fn = function () { console.log(123, this) }.bind(this);
+    // const aFn = new Object();
+    // aFn.Fn = function () { console.log(123, this) }.bind(this);
 
     return (
-      <div style={parentStyle}>
+      <div style={parentStyle} onTouchMove={this.handleTouchmove}>
 
 
         <div style={memuCSS}>
@@ -66,10 +109,9 @@ class MainHeader extends Component {
                       select={item}
                       key={item}
                       name={one.Description}
-                      active={activeA === one}
+                      active={this.props.activefn === one}
                       color={'yellow'}
                       onClick={this.handleAClick}
-                      fn={aFn}
                     />
                   )
               })
@@ -96,6 +138,8 @@ class MainHeader extends Component {
 
       </div>
     )
+
+
   }
 }
 

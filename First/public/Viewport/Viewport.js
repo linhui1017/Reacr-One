@@ -1,4 +1,4 @@
-import { detect } from 'detect-browser';
+import bowser from 'bowser';
 import Default from './Default';
 import IOS from './IOS';
 
@@ -6,20 +6,27 @@ class Viewport {
 
   constructor(config) {
 
-    const browser = detect();
+    
+    const browser = bowser.getParser(window.navigator.userAgent);
+  
+    let userTechData = browser.parse();
+   
+    let {parsedResult} = userTechData;
+
+     let conf = {...config, ...parsedResult};
+
+  
 
     // handle the case where we don't detect the browser
-    if (browser) {
-      console.log('browser.name: ', browser.name);
-      console.log('browser.version: ', browser.version);
-      console.log('browser.os: ', browser.os);
+    if (conf) {
+      console.log('browser.name: ', conf.browser.name);
+      console.log('browser.version: ', conf.browser.version);
+      console.log('browser.os: ', conf.os.name);
+
+
     }
 
-    let conf = {...config,
-      'browser':{...browser}};
-
-
-    switch (browser.os.toLowerCase()) {
+    switch (conf.os.name.toLowerCase()) {
       case 'ios':
         return new IOS(conf);
       default:

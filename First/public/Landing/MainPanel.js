@@ -1,10 +1,24 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import IPBWorkList from './IPB/WorkList';
 import ERWorkList from './ER/WorkList';
+import { FunctionType } from './SysConstants'
 
 
 
 class MainPanel extends Component {
+
+    static propTypes = {
+        activefn: PropTypes.object.isRequired
+    };
+   
+    static defaultProps = {
+        
+        activefn : FunctionType.Default,
+    }
+
+
+
     constructor(props, context) {
         super(props, context);
     }
@@ -12,28 +26,33 @@ class MainPanel extends Component {
     render() {
 
         const css = {
+            'display': 'flex',
+            'flexDirection': 'column',
+            'justifyContent': 'stretch',
+            'backgroundColor': '#cbedf2',
             'width': '100%',
-            'height': '100%',
-            'backgroundColor': '#cbedf2'
-        }
-        let active = 'IPB';
+         }
 
+
+        let active = this.props.activefn;
 
         return (
             <div id='MainPanel' style={css}>
+
                 {
                     (
                         () => {
 
-                            if (active === 'ER') {
-                                return <ERWorkList />
+                            if (active === FunctionType.EOPD) {
+                                return <ERWorkList/>
                             }
                             else {
-                                return <IPBWorkList />
+                                return <IPBWorkList/>
                             }
                         }
                     )()
-               }
+                }
+
             </div>
         )
 

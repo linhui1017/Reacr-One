@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import MainUI from './Landing/MainUI';
-import './src/css/index.css';
+import './src/css/index.scss';
 import Viewport from './Viewport/Viewport';
 //import $ from './src/js/jquery-3.3.1.min.js';
 

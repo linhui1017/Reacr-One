@@ -2,7 +2,6 @@ const { resolve } = require('path');
 const webpack = require('webpack');
 const fs = require('fs-extra');
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 devPack = env => {
@@ -44,7 +43,7 @@ devPack = env => {
             port: port,
             host: '0.0.0.0',
             contentBase: resolve(__dirname, 'dev'),
-           // publicPath: '/public',
+            publicPath: '',
             hot: true,
             disableHostCheck: true
         },
@@ -127,7 +126,7 @@ devPack = env => {
             ],
         },
         plugins: [
-            //new webpack.HotModuleReplacementPlugin(), //-- react 的 hotreload plugin
+            // new webpack.HotModuleReplacementPlugin(), //-- react 的 hotreload plugin
             new webpack.NamedModulesPlugin(),
             new MiniCssExtractPlugin({
                 filename: "styles.css",

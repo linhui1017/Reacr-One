@@ -1,0 +1,30 @@
+html {
+    overflow: hidden;
+    padding: 0;
+    -webkit-overflow-scrolling: hidden;
+  }
+  
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: sans-serif;
+    width: 100% !important;
+    height: 100% !important;
+    overflow: hidden;
+    -webkit-overflow-scrolling: hidden;
+  }
+  
+  .fullscreen {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0;
+    padding: 0;
+      /* Optional - just for DIV)*/
+    border: solid 2px red;
+    background-color: #cccccc;
+    overflow: hidden;
+  }
+  
